@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-import env from '@/config/env'
 import usersRouter from './routes/users'
 import authRouter from './routes/auth'
 
@@ -16,6 +15,4 @@ app.get('/', (req, res) => {
 app.use(usersRouter)
 app.use(authRouter)
 
-const server = app.listen(env.PORT, () => { console.log(`Listening on port ${env.PORT}`) })
-
-export default server
+export default app
