@@ -1,7 +1,14 @@
 import request from 'supertest'
 import app from '@/index'
+import { getTestUserToken } from '../../utils'
 
 describe('GET /users/:id', () => {
+  let token: string
+
+  beforeAll(async () => {
+    token = await getTestUserToken()
+  })
+
   it('should return status 200', async () => {
     // Arrange
     const responsePost = await request(app).post('/users').send({
@@ -12,7 +19,10 @@ describe('GET /users/:id', () => {
     const userId = responsePost.body.id
 
     // Act
-    const response = await request(app).get(`/users/${userId}`).expect(200)
+    const response = await request(app)
+      .get(`/users/${userId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200)
 
     // Assert
     expect(response.body.name).toBe('John Doe')
@@ -26,6 +36,16 @@ describe('GET /users/:id', () => {
     const userId = 999
 
     // Act & Assert
-    await request(app).get(`/users/${userId}`).expect(404)
+    await request(app)
+      .get(`/users/${userId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(404)
+  })
+
+  it('should return status 401 if token not provided', async () => {
+    // Act & Assert
+    await request(app)
+      .get('/users/1')
+      .expect(401)
   })
 })

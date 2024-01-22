@@ -5,6 +5,7 @@ import { createUserSchema } from './schemas/create-user.schema'
 import createUserService from './services/create-user.service'
 import { getUserSchema } from './schemas/get-user.schema'
 import getUserService from './services/get-user.service'
+import authMiddleware from '@/middleware/auth.middleware'
 
 const usersRouter = Router()
 
@@ -20,6 +21,7 @@ usersRouter.post(
 
 usersRouter.get(
   '/users/:id',
+  authMiddleware,
   catchErrors(
     async (req: Request, res: Response) => {
       const { id } = getUserSchema.parse(req.params)
