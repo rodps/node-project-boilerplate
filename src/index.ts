@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import env from '@/config/env'
+import usersRouter from './routes/users'
 
 const app = express()
 
@@ -10,6 +11,8 @@ app.use(cors())
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+
+app.use(usersRouter)
 
 const server = app.listen(env.PORT, () => { console.log(`Listening on port ${env.PORT}`) })
 

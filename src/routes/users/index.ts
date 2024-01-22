@@ -11,7 +11,7 @@ usersRouter.post(
   catchErrors(
     async (req: Request, res: Response) => {
       const data = createUserSchema.parse(req.body)
-      const user = CreateUserService(data)
+      const user = await CreateUserService(data)
       res.status(201).json(user)
     })
 )
