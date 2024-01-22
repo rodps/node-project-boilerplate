@@ -7,6 +7,10 @@ jest.mock('@/libs/hash-password')
 const repository = jest.requireMock('../repository')
 const hashPassword = jest.requireMock('@/libs/hash-password')
 
+const findUserByEmailSpy = jest.spyOn(repository, 'findUserByEmail')
+const hashPasswordSpy = jest.spyOn(hashPassword, 'hashPassword')
+const saveUserSpy = jest.spyOn(repository, 'saveUser')
+
 describe('CreateUserService', () => {
   it('should throw an error if user already exists', async () => {
     // Arrange
@@ -15,7 +19,6 @@ describe('CreateUserService', () => {
       email: 'a@a.com',
       password: '123'
     }
-    const findUserByEmailSpy = jest.spyOn(repository, 'findUserByEmail')
     findUserByEmailSpy.mockResolvedValueOnce(data)
 
     // Act
@@ -33,9 +36,6 @@ describe('CreateUserService', () => {
       email: 'a@a.com',
       password: '123'
     }
-    const findUserByEmailSpy = jest.spyOn(repository, 'findUserByEmail')
-    const hashPasswordSpy = jest.spyOn(hashPassword, 'hashPassword')
-    const saveUserSpy = jest.spyOn(repository, 'saveUser')
     findUserByEmailSpy.mockResolvedValueOnce(null)
     hashPasswordSpy.mockResolvedValueOnce('any_hash')
     saveUserSpy.mockResolvedValueOnce(data)
@@ -55,9 +55,6 @@ describe('CreateUserService', () => {
       email: 'a@a.com',
       password: '123'
     }
-    const findUserByEmailSpy = jest.spyOn(repository, 'findUserByEmail')
-    const hashPasswordSpy = jest.spyOn(hashPassword, 'hashPassword')
-    const saveUserSpy = jest.spyOn(repository, 'saveUser')
     findUserByEmailSpy.mockResolvedValueOnce(null)
     hashPasswordSpy.mockResolvedValueOnce('any_hash')
     saveUserSpy.mockResolvedValueOnce(data)
