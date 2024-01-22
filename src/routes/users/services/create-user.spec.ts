@@ -1,11 +1,10 @@
 import ApiError from '@/utils/api-error'
 import CreateUserService from './create-user.service'
+import * as repository from '../repository'
+import * as hashPassword from '@/libs/hash-password'
 
 jest.mock('../repository')
 jest.mock('@/libs/hash-password')
-
-const repository = jest.requireMock('../repository')
-const hashPassword = jest.requireMock('@/libs/hash-password')
 
 const findUserByEmailSpy = jest.spyOn(repository, 'findUserByEmail')
 const hashPasswordSpy = jest.spyOn(hashPassword, 'hashPassword')
@@ -19,7 +18,12 @@ describe('CreateUserService', () => {
       email: 'a@a.com',
       password: '123'
     }
-    findUserByEmailSpy.mockResolvedValueOnce(data)
+    findUserByEmailSpy.mockResolvedValueOnce({
+      name: 'John Doe',
+      email: 'a@a.com',
+      password: '123',
+      id: 1
+    })
 
     // Act
     const promise = CreateUserService(data)
@@ -38,7 +42,12 @@ describe('CreateUserService', () => {
     }
     findUserByEmailSpy.mockResolvedValueOnce(null)
     hashPasswordSpy.mockResolvedValueOnce('any_hash')
-    saveUserSpy.mockResolvedValueOnce(data)
+    saveUserSpy.mockResolvedValueOnce({
+      name: 'John Doe',
+      email: 'a@a.com',
+      password: '123',
+      id: 1
+    })
 
     // Act
     await CreateUserService(data)
@@ -57,12 +66,22 @@ describe('CreateUserService', () => {
     }
     findUserByEmailSpy.mockResolvedValueOnce(null)
     hashPasswordSpy.mockResolvedValueOnce('any_hash')
-    saveUserSpy.mockResolvedValueOnce(data)
+    saveUserSpy.mockResolvedValueOnce({
+      name: 'John Doe',
+      email: 'a@a.com',
+      password: '123',
+      id: 1
+    })
 
     // Act
     const user = await CreateUserService(data)
 
     // Assert
-    expect(user).toEqual(data)
+    expect(user).toEqual({
+      name: 'John Doe',
+      email: 'a@a.com',
+      password: '123',
+      id: 1
+    })
   })
 })
