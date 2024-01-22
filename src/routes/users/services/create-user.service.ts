@@ -5,7 +5,7 @@ import ApiError from '@/utils/api-error'
 import httpStatus from 'http-status'
 import { hashPassword } from '@/libs/hash-password'
 
-const CreateUserService = async (data: CreateUserData): Promise<User> => {
+const createUserService = async (data: CreateUserData): Promise<User> => {
   const doesUserExist = await findUserByEmail(data.email)
   if (doesUserExist != null) {
     throw new ApiError(httpStatus.CONFLICT, 'User already exists')
@@ -14,4 +14,4 @@ const CreateUserService = async (data: CreateUserData): Promise<User> => {
   return await saveUser({ ...data, password })
 }
 
-export default CreateUserService
+export default createUserService

@@ -1,5 +1,5 @@
 import ApiError from '@/utils/api-error'
-import CreateUserService from './create-user.service'
+import createUserService from './create-user.service'
 import * as repository from '../repository'
 import * as hashPassword from '@/libs/hash-password'
 
@@ -10,7 +10,7 @@ const findUserByEmailSpy = jest.spyOn(repository, 'findUserByEmail')
 const hashPasswordSpy = jest.spyOn(hashPassword, 'hashPassword')
 const saveUserSpy = jest.spyOn(repository, 'saveUser')
 
-describe('CreateUserService', () => {
+describe('createUserService', () => {
   it('should throw an error if user already exists', async () => {
     // Arrange
     const data = {
@@ -26,7 +26,7 @@ describe('CreateUserService', () => {
     })
 
     // Act
-    const promise = CreateUserService(data)
+    const promise = createUserService(data)
 
     // Assert
     expect(findUserByEmailSpy).toHaveBeenCalledWith(data.email)
@@ -50,7 +50,7 @@ describe('CreateUserService', () => {
     })
 
     // Act
-    await CreateUserService(data)
+    await createUserService(data)
 
     // Assert
     expect(hashPasswordSpy).toHaveBeenCalledWith(data.password)
@@ -74,7 +74,7 @@ describe('CreateUserService', () => {
     })
 
     // Act
-    const user = await CreateUserService(data)
+    const user = await createUserService(data)
 
     // Assert
     expect(user).toEqual({
