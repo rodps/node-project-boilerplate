@@ -11,7 +11,6 @@ describe('POST /users', () => {
       .expect(201)
       .expect('Content-Type', /json/)
 
-    console.log(response.body)
     expect(response.body.name).toBe('John Doe')
     expect(response.body.email).toBe('a@a.com')
   })
