@@ -16,11 +16,21 @@ describe('POST /users', () => {
   })
 
   it('should return status 409 if user already exists', async () => {
+    // Arrange
+    await request(app).post('/users').send({
+      name: 'John Doe',
+      email: 'a@a.com',
+      password: '123'
+    })
+
+    // Act
     const response = await request(app).post('/users').send({
       name: 'John Doe',
       email: 'a@a.com',
       password: '123'
     })
+
+    // Assert
     expect(response.status).toBe(409)
     expect(response.body.error).toBe('User already exists')
   })
