@@ -16,4 +16,12 @@ const findUserByEmail = async (email: string): Promise<User | null> => {
   })
 }
 
-export { saveUser, findUserByEmail }
+const findUserById = async (id: number): Promise<User | null> => {
+  return await prisma.user.findUnique({
+    where: {
+      id
+    }
+  })
+}
+
+export { saveUser, findUserByEmail, findUserById }
