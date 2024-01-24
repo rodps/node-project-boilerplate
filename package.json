@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf ./dist && tsc && tsc-alias",
-    "start": "node ./dist/src/index.js",
-    "dev": "ts-node -r tsconfig-paths/register ./src/index.ts",
-    "dev:watch": "nodemon -r tsconfig-paths/register ./src/index.ts",
+    "start": "node ./dist/src/server.js",
+    "dev": "ts-node -r tsconfig-paths/register --files ./src/server.ts",
+    "dev:watch": "nodemon -r tsconfig-paths/register --files ./src/server.ts",
     "test": "jest ./src",
     "test:api": "./scripts/test-integration.sh"
   },
